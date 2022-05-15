@@ -6,6 +6,7 @@ public class Obstacle : MonoBehaviour
 {
     public Rigidbody2D rig;
     public float speed;
+    public AudioSource audioDeath;
 
     void Start()
     {
@@ -15,5 +16,13 @@ public class Obstacle : MonoBehaviour
     void FixedUpdate()
     {
         rig.MovePosition(transform.position + transform.right * speed * Time.deltaTime);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player")) {
+            audioDeath.Play();
+            GameController.instance.ShowGameOver();
+        }
     }
 }
